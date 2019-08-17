@@ -1,0 +1,115 @@
+<p><em>Fields marked with <span class="btdRequiredIndicator">*</span> are required.</em></p>
+
+<form [formGroup]="contactForm"
+    (submit)="submitForm()">
+    <div class="animate-container"
+        *ngIf="formSubmitted && !formValid()"
+        @slideOpenClose>
+        <div class="alert alert-danger" role="alert" tabindex="-1" #formErrorBox>
+            <h2 class="alert-heading h6">Please correct the following errors:</h2>
+            <ul class="m-0">
+                <li *ngIf="contactForm.controls['contactName'].invalid">
+                    <a href="#contactName"
+                        class="alert-link"
+                        clickFocus>Name field is required</a>
+                </li>
+                <li *ngIf="contactForm.controls['contactEmail'].invalid">
+                    <a href="#contactEmail"
+                        class="alert-link"
+                        clickFocus
+                        *ngIf="contactForm.controls['contactEmail'].errors.required">Email Address field is required.</a>
+                    <a href="#contactEmail"
+                        class="alert-link"
+                        clickFocus
+                        *ngIf="contactForm.controls['contactEmail'].errors.email">Email Address field is invalid.</a>
+                </li>
+                <li *ngIf="contactForm.controls['contactMessage'].invalid">
+                    <a href="#contactMessage"
+                        class="alert-link"
+                        clickFocus>Message field is required.</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="contactName">Name <span>*</span></label>
+                <input type="text"
+                    id="contactName"
+                    name="contactName"
+                    class="form-control"
+                    placeholder="Eg. John Smith"
+                    required
+                    aria-required="true"
+                    aria-describedby="contactName-error"
+                    maxlength="25"
+                    formControlName="contactName"
+                    [ngClass]="{'is-invalid' : (contactForm.controls['contactName'].touched && contactForm.controls['contactName'].invalid), 'is-valid' : contactForm.controls['contactName'].valid}">
+                <div class="invalid-feedback" role="alert" id="contactName-error">
+                    <div class="animate-container"
+                        @slideOpenClose
+                        *ngIf="contactForm.controls['contactName'].touched && contactForm.controls['contactName'].invalid">
+                        Error: Name field is required.
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label for="contactEmail">Email Address <span class="btdRequiredIndicator">*</span></label>
+                <input type="email"
+                    id="contactEmail"
+                    name="contactEmail"
+                    class="form-control"
+                    placeholder="joe@shmoe.com"
+                    required
+                    aria-required="true"
+                    aria-describedby="contactEmail-error"
+                    maxlength="255"
+                    formControlName="contactEmail"
+                    [ngClass]="{'is-invalid' : (contactForm.controls['contactEmail'].touched && contactForm.controls['contactEmail'].invalid), 'is-valid' : contactForm.controls['contactEmail'].valid}">
+                <div class="invalid-feedback" role="alert" id="contactEmail-error">
+                    <div class="animate-container"
+                        @slideOpenClose
+                        *ngIf="contactForm.controls['contactEmail'].touched && contactForm.controls['contactEmail'].invalid">
+                        <ng-container *ngIf="contactForm.controls['contactEmail'].errors.required">
+                            Error: Email Address field is required.
+                        </ng-container>
+                        <ng-container *ngIf="contactForm.controls['contactEmail'].errors.email">
+                            Error: Email Address field is invalid.
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="contactMessage">Message <span>*</span></label>
+                <textarea id="contactMessage"
+                    name="contactMessage"
+                    rows="5"
+                    class="form-control"
+                    required
+                    aria-required="true"
+                    aria-describedby="contactMessage-error"
+                    maxlength="4000"
+                    formControlName="contactMessage"
+                    [ngClass]="{'is-invalid' : (contactForm.controls['contactMessage'].touched && contactForm.controls['contactMessage'].invalid), 'is-valid' : contactForm.controls['contactMessage'].valid}"></textarea>
+                <div class="invalid-feedback" role="alert" id="contactMessage-error">
+                    <div class="btdAnimateContainer"
+                        @slideOpenClose
+                        *ngIf="contactForm.controls['contactMessage'].touched && contactForm.controls['contactMessage'].invalid">
+                        Error: Message field is required.
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                Submit
+                <span class="ml-2" *ngIf="formProcessing">
+                    <span class="spinner-border spinner-border-sm"></span>
+                </span>
+            </button>
+        </div>
+    </div>
+</form>
