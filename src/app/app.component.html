@@ -5,7 +5,7 @@
     <div class="animate-container"
         *ngIf="formSubmitted && !formValid()"
         @slideOpenClose>
-        <div class="alert alert-danger" role="alert" tabindex="-1" #formErrorBox>
+        <div class="alert alert-danger" role="alert" tabindex="-2" #formErrorBox>
             <h2 class="alert-heading h6">Please correct the following errors:</h2>
             <ul class="m-0">
                 <li *ngIf="contactForm.controls['contactName'].invalid">
@@ -104,7 +104,9 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary">
+            <button type="submit"
+                class="btn btn-primary"
+                [attr.aria-busy]="(formProcessing) ? 'true' : 'false'">
                 Submit
                 <span class="ml-2" *ngIf="formProcessing">
                     <span class="spinner-border spinner-border-sm"></span>
